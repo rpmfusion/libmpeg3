@@ -1,13 +1,12 @@
 Summary: Decoder of various derivatives of MPEG standards
 Name: libmpeg3
-Version: 1.7
-Release: 6%{?dist}
+Version: 1.8
+Release: 1%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://heroinewarrior.com/libmpeg3.php3
 Source: http://dl.sf.net/heroines/libmpeg3-%{version}-src.tar.bz2
-Patch0: libmpeg3-1.7-makefile.patch
-Patch1: libmpeg3-1.7-cinelerra_autotools.patch
+Patch1: libmpeg3-1.8-cinelerra_autotools.patch
 Patch2: libmpeg3-1.7-cinelerra_hacking.patch
 Patch3: libmpeg3-1.7-fix_commented.patch
 Patch4: libmpeg3-1.7-spec_in.patch
@@ -16,11 +15,12 @@ Patch6: libmpeg3-1.7-boostrap.patch
 # Patches 7/8 from gentoo
 #http://sources.gentoo.org/viewcvs.py/gentoo-x86/media-libs/libmpeg3/files/
 Patch7: libmpeg3-1.5.2-gnustack.patch
-Patch8: libmpeg3-1.7-memcpy.patch
+Patch9: libmpeg3-1.7-mpeg2qt-args.patch
+Patch10: libmpeg3-1.8-mmx.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: nasm
 BuildRequires: a52dec-devel
-
+BuildRequires: libquicktime-devel
 BuildRequires: libtool
 
 %description
@@ -63,17 +63,15 @@ libmpeg3.
 
 %prep
 %setup -q
-#patch0 -p1 -b .makefile
-
 # Removed unneeded files
-#rm -rf a52dec-* depend.a52
+rm -rf a52dec-* depend.a52
 
 # Patch autotools
 %patch1 -p1
 
 # Thoses patches was taken from cinepaint cvs
 # Which have special libmpeg3
-#patch2 -p1 -b .cine_hack
+%patch2 -p1 -b .cine_hack
 
 # Fix comments
 %patch3 -p1 -b .commented
@@ -89,7 +87,12 @@ libmpeg3.
 
 # gentoo patches
 %patch7 -p1 -b .gnustack
-%patch8 -p1 -b .memcpy
+
+# Patch the number of arguments of mpeg2qt
+%patch9 -p1 -b .args
+
+# Patch to add mmx possibility via nasm/yasm
+%patch10 -p1 -b .mmx
 
 # Touch docs files:
 touch INSTALL README NEWS AUTHORS ChangeLog
@@ -102,13 +105,21 @@ chmod 755 bootstrap
 %build
 # Enable USE_MMX for archs that support it, not by default on i386
 %configure --enable-shared --disable-static \
-%ifarch i686 x86_64
-#  --enable-mmx \
+%ifarch i686
+  --enable-mmx \
 %endif
 
 # This seems not to work with x86_64 on AMD64
 # Error: suffix or operands invalid for `push'
 #sed -i -e 's|$(CCASFLAGS)|#$(CCASFLAGS)|g' video/Makefile
+
+# Hack to have mmx compiled on i686
+%ifarch i686
+pushd video
+mkdir -p .libs
+nasm -f elf reconmmx.s -o .libs/reconmmx.o
+popd
+%endif
 
 make %{?_smp_mflags}
 
@@ -145,6 +156,7 @@ make %{?_smp_mflags}
 %{_bindir}/mpeg3dump
 %{_bindir}/mpeg3peek
 %{_bindir}/mpeg3toc
+%{_bindir}/mpeg2qt
 
 %files devel
 %doc docs/*
@@ -155,8 +167,13 @@ make %{?_smp_mflags}
 
 
 %changelog
-* Sun Aug 03 2008 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info - 1.7-6
-- rebuild
+* Mon Aug 11 2008 kwizart < kwizart at gmail.com > - 1.8-1
+- Upate to 1.8
+- Enable cinelerra-cv hacks
+
+* Sat Jan 10 2008 kwizart < kwizart at gmail.com > - 1.7-6
+- Fix mpeg2qt linked with libquicktime
+- Disable mmx 
 
 * Fri Sep 28 2007 kwizart < kwizart at gmail.com > - 1.7-5
 - Add gentoo patches
