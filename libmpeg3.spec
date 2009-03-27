@@ -1,7 +1,7 @@
 Summary: Decoder of various derivatives of MPEG standards
 Name: libmpeg3
 Version: 1.8
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://heroinewarrior.com/libmpeg3.php3
@@ -167,6 +167,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Fri Mar 27 2009 kwizart < kwizart at gmail.com > - 1.8-2
+- Rebuild
+
 * Mon Aug 11 2008 kwizart < kwizart at gmail.com > - 1.8-1
 - Upate to 1.8
 - Enable cinelerra-cv hacks
