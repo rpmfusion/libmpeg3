@@ -1,7 +1,7 @@
 Summary: Decoder of various derivatives of MPEG standards
 Name: libmpeg3
 Version: 1.8
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://heroinewarrior.com/libmpeg3.php3
@@ -18,7 +18,7 @@ Patch7: libmpeg3-1.5.2-gnustack.patch
 Patch9: libmpeg3-1.7-mpeg2qt-args.patch
 Patch10: libmpeg3-1.8-mmx.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires: nasm
+#BuildRequires: nasm
 BuildRequires: a52dec-devel
 BuildRequires: libquicktime-devel
 BuildRequires: libtool
@@ -105,7 +105,7 @@ chmod 755 bootstrap
 %build
 # Enable USE_MMX for archs that support it, not by default on i386
 %configure --enable-shared --disable-static \
-%ifarch i686
+%if 0
   --enable-mmx \
 %endif
 
@@ -114,7 +114,7 @@ chmod 755 bootstrap
 #sed -i -e 's|$(CCASFLAGS)|#$(CCASFLAGS)|g' video/Makefile
 
 # Hack to have mmx compiled on i686
-%ifarch i686
+%if 0
 pushd video
 mkdir -p .libs
 nasm -f elf reconmmx.s -o .libs/reconmmx.o
@@ -167,6 +167,10 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Wed Nov  4 2009 kwizart < kwizart at gmail.com > - 1.8-3
+- Rebuild for F-12
+- Disable mmx (broken)
+
 * Fri Mar 27 2009 kwizart < kwizart at gmail.com > - 1.8-2
 - Rebuild
 
