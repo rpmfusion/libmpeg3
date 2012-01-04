@@ -1,7 +1,7 @@
 Summary: Decoder of various derivatives of MPEG standards
 Name: libmpeg3
 Version: 1.8
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://heroinewarrior.com/libmpeg3.php3
@@ -167,6 +167,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Wed Jan 04 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.8-4
+- Rebuilt for target i686
+
 * Wed Nov  4 2009 kwizart < kwizart at gmail.com > - 1.8-3
 - Rebuild for F-12
 - Disable mmx (broken)
