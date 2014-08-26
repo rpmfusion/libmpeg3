@@ -11,7 +11,7 @@ Source: http://dl.sf.net/heroines/libmpeg3-%{version}-src.tar.bz2
 # git clone git@github.com:sergiomb2/libmpeg3.git
 # tag=$(git rev-list HEAD -n 1 | cut -c 1-7)
 # git diff 1.8 . > "$date"_git"$tag".patch
-Patch0: 20140826_git6589c5f.patch
+Patch0: 20140826_git395120d.patch
 
 #BuildRequires: nasm
 BuildRequires: a52dec-devel
