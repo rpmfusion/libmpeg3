@@ -17,7 +17,6 @@ Patch6: libmpeg3-1.7-boostrap.patch
 Patch7: libmpeg3-1.5.2-gnustack.patch
 Patch9: libmpeg3-1.7-mpeg2qt-args.patch
 Patch10: libmpeg3-1.8-mmx.patch
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 #BuildRequires: nasm
 BuildRequires: a52dec-devel
 BuildRequires: libquicktime-devel
@@ -124,20 +123,13 @@ popd
 make %{?_smp_mflags}
 
 
-
 %install
-%{__rm} -rf %{buildroot}
-
 %{__make} install \
     LIBDIR=%{_libdir} \
     DESTDIR=%{buildroot} \
     INSTALL="install -c -p"
 
 %{__rm} -rf %{buildroot}%{_libdir}/*.la
-
-
-%clean
-%{__rm} -rf %{buildroot}
 
 
 %post -p /sbin/ldconfig
@@ -184,7 +176,7 @@ make %{?_smp_mflags}
 - Upate to 1.8
 - Enable cinelerra-cv hacks
 
-* Sat Jan 10 2008 kwizart < kwizart at gmail.com > - 1.7-6
+* Sat Jan 12 2008 kwizart < kwizart at gmail.com > - 1.7-6
 - Fix mpeg2qt linked with libquicktime
 - Disable mmx 
 
