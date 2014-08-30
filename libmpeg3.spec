@@ -1,23 +1,19 @@
 Summary: Decoder of various derivatives of MPEG standards
 Name: libmpeg3
 Version: 1.8
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://heroinewarrior.com/libmpeg3.php3
 Source: http://dl.sf.net/heroines/libmpeg3-%{version}-src.tar.bz2
-Patch1: libmpeg3-1.8-cinelerra_autotools.patch
-Patch2: libmpeg3-1.7-cinelerra_hacking.patch
-Patch3: libmpeg3-1.7-fix_commented.patch
-Patch4: libmpeg3-1.7-spec_in.patch
-Patch5: libmpeg3-1.7-pkgconfig.in.patch
-Patch6: libmpeg3-1.7-boostrap.patch
-# Patches 7/8 from gentoo
-#http://sources.gentoo.org/viewcvs.py/gentoo-x86/media-libs/libmpeg3/files/
-Patch7: libmpeg3-1.5.2-gnustack.patch
-Patch9: libmpeg3-1.7-mpeg2qt-args.patch
-Patch10: libmpeg3-1.8-mmx.patch
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+# patch from https://github.com/sergiomb2/libmpeg3
+# date=$(date +%Y%m%d)
+# git clone git@github.com:sergiomb2/libmpeg3.git
+# tag=$(git rev-list HEAD -n 1 | cut -c 1-7)
+# git diff 1.8 . > "$date"_git"$tag".patch
+Patch0: 20140830_git6c02a5e.patch
+
 #BuildRequires: nasm
 BuildRequires: a52dec-devel
 BuildRequires: libquicktime-devel
@@ -63,41 +59,8 @@ libmpeg3.
 
 %prep
 %setup -q
-# Removed unneeded files
-rm -rf a52dec-* depend.a52
+%patch0 -p1 -b .github
 
-# Patch autotools
-%patch1 -p1
-
-# Thoses patches was taken from cinepaint cvs
-# Which have special libmpeg3
-%patch2 -p1 -b .cine_hack
-
-# Fix comments
-%patch3 -p1 -b .commented
-
-# Add spec.in
-%patch4 -p1
-
-# Add pkgconfig.in
-%patch5 -p1
-
-# Add ./bootstrap
-%patch6 -p1
-
-# gentoo patches
-%patch7 -p1 -b .gnustack
-
-# Patch the number of arguments of mpeg2qt
-%patch9 -p1 -b .args
-
-# Patch to add mmx possibility via nasm/yasm
-%patch10 -p1 -b .mmx
-
-# Touch docs files:
-touch INSTALL README NEWS AUTHORS ChangeLog
-
-# Build autotools
 chmod 755 bootstrap
 ./bootstrap
 
@@ -124,20 +87,13 @@ popd
 make %{?_smp_mflags}
 
 
-
 %install
-%{__rm} -rf %{buildroot}
-
 %{__make} install \
     LIBDIR=%{_libdir} \
     DESTDIR=%{buildroot} \
     INSTALL="install -c -p"
 
 %{__rm} -rf %{buildroot}%{_libdir}/*.la
-
-
-%clean
-%{__rm} -rf %{buildroot}
 
 
 %post -p /sbin/ldconfig
@@ -167,6 +123,12 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Tue Aug 26 2014 Sérgio Basto <sergio@serjux.com> - 1.8-6
+- update to 20140830_git6c02a5e.patch (fixes when uses -Werror=format-security)
+- add mpeg3protos.h to pkginclude_HEADERS 
+- use https://github.com/sergiomb2/libmpeg3 with all patches
+- spec clean up
+
 * Sun Mar 03 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.8-5
 - Mass rebuilt for Fedora 19 Features
 
@@ -184,7 +146,7 @@ make %{?_smp_mflags}
 - Upate to 1.8
 - Enable cinelerra-cv hacks
 
-* Sat Jan 10 2008 kwizart < kwizart at gmail.com > - 1.7-6
+* Sat Jan 12 2008 kwizart < kwizart at gmail.com > - 1.7-6
 - Fix mpeg2qt linked with libquicktime
 - Disable mmx 
 
