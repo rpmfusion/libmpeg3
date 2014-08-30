@@ -34020,6 +34020,28 @@ index f7c5284..50b201c 100644
  						}
  					}
  				}
+diff --git a/mpeg3tocutil.c b/mpeg3tocutil.c
+index 7afee58..540567f 100644
+--- a/mpeg3tocutil.c
++++ b/mpeg3tocutil.c
+@@ -1278,7 +1278,7 @@ void mpeg3_stop_toc(mpeg3_t *file)
+ 
+ // Store file information
+ 	PUT_INT32(FILE_INFO);
+-	fprintf(file->toc_fd, file->fs->path);
++	fprintf(file->toc_fd, "%s", file->fs->path);
+ 	for(j = strlen(file->fs->path); j < MPEG3_STRLEN; j++)
+ 			fputc(0, file->toc_fd);
+ 	PUT_INT64(file->source_date);
+@@ -1309,7 +1309,7 @@ void mpeg3_stop_toc(mpeg3_t *file)
+ // Path
+ 		PUT_INT32(TITLE_PATH);
+ 
+-		fprintf(file->toc_fd, title->fs->path);
++		fprintf(file->toc_fd, "%s", title->fs->path);
+ 
+ // Pad path with 0
+ 		for(j = strlen(title->fs->path); j < MPEG3_STRLEN; j++)
 diff --git a/video/Makefile.am b/video/Makefile.am
 new file mode 100644
 index 0000000..cba6ff5

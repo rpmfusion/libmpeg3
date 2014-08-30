@@ -6,12 +6,13 @@ License: GPLv2+
 Group: System Environment/Libraries
 URL: http://heroinewarrior.com/libmpeg3.php3
 Source: http://dl.sf.net/heroines/libmpeg3-%{version}-src.tar.bz2
+
 # patch from https://github.com/sergiomb2/libmpeg3
 # date=$(date +%Y%m%d)
 # git clone git@github.com:sergiomb2/libmpeg3.git
 # tag=$(git rev-list HEAD -n 1 | cut -c 1-7)
 # git diff 1.8 . > "$date"_git"$tag".patch
-Patch0: 20140826_git395120d.patch
+Patch0: 20140830_git6c02a5e.patch
 
 #BuildRequires: nasm
 BuildRequires: a52dec-devel
@@ -123,6 +124,7 @@ make %{?_smp_mflags}
 
 %changelog
 * Tue Aug 26 2014 Sérgio Basto <sergio@serjux.com> - 1.8-6
+- update to 20140830_git6c02a5e.patch (fixes when uses -Werror=format-security)
 - add mpeg3protos.h to pkginclude_HEADERS 
 - use https://github.com/sergiomb2/libmpeg3 with all patches
 - spec clean up
