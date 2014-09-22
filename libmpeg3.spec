@@ -1,7 +1,7 @@
 Summary: Decoder of various derivatives of MPEG standards
 Name: libmpeg3
 Version: 1.8
-Release: 6%{?dist}
+Release: 7%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://heroinewarrior.com/libmpeg3.php3
@@ -12,7 +12,7 @@ Source: http://dl.sf.net/heroines/libmpeg3-%{version}-src.tar.bz2
 # git clone git@github.com:sergiomb2/libmpeg3.git
 # tag=$(git rev-list HEAD -n 1 | cut -c 1-7)
 # git diff 1.8 . > "$date"_git"$tag".patch
-Patch0: 20140830_git6c02a5e.patch
+Patch0: 20140922_git47a2f45.patch
 
 #BuildRequires: nasm
 BuildRequires: a52dec-devel
@@ -123,6 +123,10 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Mon Sep 22 2014 Sérgio Basto <sergio@serjux.com> - 1.8-7
+- Use 20140922_git47a2f45.patch, repo sergiomb2/libmpeg3 has been refactored,
+  almost just update git hash
+
 * Tue Aug 26 2014 Sérgio Basto <sergio@serjux.com> - 1.8-6
 - update to 20140830_git6c02a5e.patch (fixes when uses -Werror=format-security)
 - add mpeg3protos.h to pkginclude_HEADERS 
