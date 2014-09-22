@@ -1,48 +1,19 @@
-diff --git a/.gitignore b/.gitignore
-new file mode 100644
-index 0000000..4d40434
---- /dev/null
-+++ b/.gitignore
-@@ -0,0 +1,23 @@
-+# Object files
-+*.o
-+*.ko
-+*.obj
-+*.elf
-+
-+# Libraries
-+*.lib
-+*.a
-+
-+# Shared objects (inc. Windows DLLs)
-+*.dll
-+*.so
-+*.so.*
-+*.dylib
-+
-+# Executables
-+*.exe
-+*.out
-+*.app
-+*.i*86
-+*.x86_64
-+*.hex
 diff --git a/AUTHORS b/AUTHORS
 new file mode 100644
 index 0000000..e69de29
 diff --git a/COPYING b/COPYING
-index 1ad9cd3..22fbe5d 100644
+index 1ad9cd3..d159169 100644
 --- a/COPYING
 +++ b/COPYING
 @@ -1,12 +1,12 @@
 -		    GNU GENERAL PUBLIC LICENSE
 -		       Version 2, June 1991
-+GNU GENERAL PUBLIC LICENSE
++                    GNU GENERAL PUBLIC LICENSE
 +                       Version 2, June 1991
  
 - Copyright (C) 1989, 1991 Free Software Foundation, Inc.
 -                       59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-+ Copyright (C) 1989, 1991 Free Software Foundation, Inc., <http://fsf.org/>
++ Copyright (C) 1989, 1991 Free Software Foundation, Inc.,
 + 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
   Everyone is permitted to copy and distribute verbatim copies
   of this license document, but changing it is not allowed.
@@ -146,10 +117,9 @@ index 1ad9cd3..22fbe5d 100644
 -the \"copyright\" line and a pointer to where the full notice is found.
 +the "copyright" line and a pointer to where the full notice is found.
  
--    <one line to give the program's name and a brief idea of what it does.>
+     <one line to give the program's name and a brief idea of what it does.>
 -    Copyright (C) 19yy  <name of author>
-+    {description}
-+    Copyright (C) {year}  {fullname}
++    Copyright (C) <year>  <name of author>
  
      This program is free software; you can redistribute it and/or modify
      it under the terms of the GNU General Public License as published by
@@ -175,7 +145,7 @@ index 1ad9cd3..22fbe5d 100644
      Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
      This is free software, and you are welcome to redistribute it
      under certain conditions; type `show c' for details.
-@@ -341,17 +323,17 @@ be called something other than `show w' and `show c'; they could even be
+@@ -341,7 +323,7 @@ be called something other than `show w' and `show c'; they could even be
  mouse-clicks or menu items--whatever suits your program.
  
  You should also get your employer (if you work as a programmer) or your
@@ -184,20 +154,13 @@ index 1ad9cd3..22fbe5d 100644
  necessary.  Here is a sample; alter the names:
  
    Yoyodyne, Inc., hereby disclaims all copyright interest in the program
-   `Gnomovision' (which makes passes at compilers) written by James Hacker.
- 
--  <signature of Ty Coon>, 1 April 1989
-+  {signature of Ty Coon}, 1 April 1989
-   Ty Coon, President of Vice
- 
+@@ -353,5 +335,5 @@ necessary.  Here is a sample; alter the names:
  This General Public License does not permit incorporating your program into
  proprietary programs.  If your program is a subroutine library, you may
  consider it more useful to permit linking proprietary applications with the
 -library.  If this is what you want to do, use the GNU Library General
--Public License instead of this License.
 +library.  If this is what you want to do, use the GNU Lesser General
-+Public License instead of this License.
-\ No newline at end of file
+ Public License instead of this License.
 diff --git a/ChangeLog b/ChangeLog
 new file mode 100644
 index 0000000..e69de29
