@@ -1,7 +1,7 @@
 Summary: Decoder of various derivatives of MPEG standards
 Name: libmpeg3
 Version: 1.8
-Release: 9%{?dist}
+Release: 10%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://heroinewarrior.com/libmpeg3.php3
@@ -16,7 +16,10 @@ Patch0: 20140922_git47a2f45.patch
 
 #BuildRequires: nasm
 BuildRequires: a52dec-devel
-BuildRequires: libquicktime-devel
+# libquicktime is FTBFS in F28
+%if 0%{?fedora} <= 27
+BuildRequires: libquicktime-devel >= 0.9.8
+%endif
 BuildRequires: libtool
 
 %description
@@ -84,14 +87,11 @@ nasm -f elf reconmmx.s -o .libs/reconmmx.o
 popd
 %endif
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
-%{__make} install \
-    LIBDIR=%{_libdir} \
-    DESTDIR=%{buildroot} \
-    INSTALL="install -c -p"
+%make_install LIBDIR=%{_libdir}
 
 %{__rm} -rf %{buildroot}%{_libdir}/*.la
 
@@ -102,27 +102,29 @@ make %{?_smp_mflags}
 
 
 %files
-%defattr(-, root, root, -)
-%doc COPYING
+%license COPYING
 %{_libdir}/*.so.*
 
 %files utils
-%defattr(-, root, root, -)
 %{_bindir}/mpeg3cat
 %{_bindir}/mpeg3dump
 %{_bindir}/mpeg3peek
 %{_bindir}/mpeg3toc
+%if 0%{?fedora} <= 27
 %{_bindir}/mpeg2qt
+%endif
 
 %files devel
 %doc docs/*
-%defattr(-, root, root,-)
 %{_libdir}/*.so
 %{_includedir}/mpeg3/
 %{_libdir}/pkgconfig/%{name}.pc
 
 
 %changelog
+* Thu Jan 25 2018 Leigh Scott <leigh123linux@googlemail.com> - 1.8-10
+- Build without libquicktime for F28
+
 * Thu Aug 31 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 1.8-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
