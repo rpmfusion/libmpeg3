@@ -1,7 +1,7 @@
 Summary: Decoder of various derivatives of MPEG standards
 Name: libmpeg3
 Version: 1.8
-Release: 16%{?dist}
+Release: 17%{?dist}
 License: GPLv2+
 Group: System Environment/Libraries
 URL: http://heroinewarrior.com/libmpeg3.php3
@@ -122,6 +122,9 @@ popd
 
 
 %changelog
+* Wed Feb 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.8-17
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Tue Aug 18 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.8-16
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
